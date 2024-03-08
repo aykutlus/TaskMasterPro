@@ -12,10 +12,13 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 
 def run_extraido(username, password, export, frequency):
+    print("opening")
     options = FirefoxOptions()
     options.headless = False # Set to False if you want to see the browser UI
     driver = webdriver.Remote(command_executor='http://172.17.0.2:4444', options=options)
+    print("opening")
     driver.get("https://chat.openai.com/")
+    print("opened")
     time.sleep(1000)
     # # get google.co.in
     driver.get("http://192.168.100.183:18001/sislog/autenticacion/login.do")
@@ -93,7 +96,7 @@ def run_extraido(username, password, export, frequency):
     accept_button = driver.find_element(By.XPATH, value="//input[@value='Buscar']")
     accept_button.click()
 
-    if(export):
+    if(export == 'export'):
         
         ## 10. ORDENADOR POR AGENCIA
         agencia = None

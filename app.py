@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash,send_file
+from flask import Flask, render_template, request, redirect, url_for, flash,send_file,jsonify,make_response 
 from selenium import webdriver
 import time
 from selenium.webdriver.common.keys import Keys
@@ -7,9 +7,12 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 import os
 from methods.extraido import run_extraido
 from methods.termianado import run_termianado
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
 
 @app.route('/download-file', methods=['POST'])
 def download_file():
@@ -30,29 +33,34 @@ def download_file():
     except Exception as e:
         return str(e)
 
-@app.route('/run-process')
+@app.route('/run-process', methods=['POST','OPTIONS'])
 def run_process():
-    try:
-        # Get JSON data
-        data = request.get_json()
+    try:    
+        app.logger.debug('Method: %s', request.method)
+        app.logger.debug('Headers: %s', request.headers)
+        if request.is_json:
+            data = request.get_json()
+            print(data)
+            # Extract data
+            process = data.get('processType')
+            operation = data.get('operation')
+            username = data.get('username')
+            password = data.get('password')
+            frequency = data.get('frequency')
+            if(process == "extraido"):
+                # Initialize Selenium WebDriver with Firefox options
+                # options = FirefoxOptions()
+                # options.headless = False # Set to False if you want to see the browser UI
+                # driver = webdriver.Remote(command_executor='http://172.17.0.2:4444', options=options)
+                print("extraido")
+                run_extraido(username,password, operation, frequency)
+                
+            if(process == "termianado"):
+                run_termianado(username,password, operation, frequency)            # Process your data here
+            return jsonify({"success": True}), 200
+        else:
+            return jsonify({"error": "Request must be JSON"}), 400     
 
-        # Extract data
-        process = data.get('processType')
-        operation = data.get('operation')
-        username = data.get('username')
-        password = data.get('password')
-        frequency = data.get('frequency'
-                             )
-        if(process == "extraido"):
-            # Initialize Selenium WebDriver with Firefox options
-            # options = FirefoxOptions()
-            # options.headless = False # Set to False if you want to see the browser UI
-            # driver = webdriver.Remote(command_executor='http://172.17.0.2:4444', options=options)
-            
-            run_extraido(username,password, operation, frequency)
-            
-        if(process == "termianado"):
-            run_termianado(username,password, operation, frequency)
             
     except Exception as e:
             raise Exception(e)

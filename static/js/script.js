@@ -56,20 +56,6 @@ function run(operation) {
     if (operation === 'export') {
         // Call the API and wait for it to complete
         callAPI(username, password, 'export', frequency, selectedProcess)
-        .then(response => {
-            // Check if the API call was successful
-            if (response.ok) {
-                // If the API call was successful, submit the download form
-                document.getElementById("downloadForm").submit();
-            } else {
-                // If the API call was not successful, log an error
-                console.error('API request failed:', response.statusText);
-            }
-        })
-        .catch(error => {
-            // Handle any errors that occur during the API call
-            console.error('Error:', error);
-        });
     } else if (operation === 'run') {
         // For 'run' operation, simply call the API without waiting for completion
         callAPI(username,password, 'run', frequency, selectedProcess)
@@ -79,9 +65,6 @@ function run(operation) {
 
 function callAPI(username,password,operation,frequency, processType) {
     console.log(processType, operation);
-    
-    // Construct the URL for your API endpoint
-    const apiUrl = 'http://localhost:5000';
 
     // Prepare the request body
     const requestBody = {
@@ -91,21 +74,23 @@ function callAPI(username,password,operation,frequency, processType) {
         password: password,
         frequency: frequency,
     };
+    console.log(JSON.stringify(requestBody));
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/run-process', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(requestBody));
+
+
 
     // Check if the operation is 'export'
     if (operation === 'export') {
-        // If it's 'export', wait for the result
-        return fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-        });
-    } else {
-        // If it's not 'export', don't wait for the result
-        // Return a resolved Promise
-        return Promise.resolve();
-    }
+        xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                // Resolve the promise with the response text (or JSON if preferred)
+                resolve(xhr.response);
+            } 
+        };
+    } 
 }
 
