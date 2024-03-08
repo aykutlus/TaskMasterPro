@@ -61,10 +61,10 @@ def login():
             return redirect(url_for('login'))
     return render_template('login.html')
 
-@app.route('/dashboard')
+@app.route('/projects')
 def dashboard():
-    # Replace with actual dashboard functionality
-    return 'Welcome to your dashboard!'
+    return render_template('projects.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0',port=5000)

@@ -1,0 +1,134 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #eceff1;
+}
+.header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header .logo-container {
+    display: flex;
+    align-items: center;
+}
+.header .logo {
+    height: 60px; /* Adjusted logo size */
+    margin-right: 20px;
+}
+.nav-button {
+    background-color: #0056b3;
+    border: none;
+    padding: 10px 15px;
+    margin: 0 10px;
+    cursor: pointer;
+    color: white;
+    border-radius: 4px;
+    font-size: 16px;
+    line-height: 25px; /* Align with the icon */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+.nav-button:hover {
+    background-color: #003870;
+}
+.nav-button.active {
+    background-color: #003870; /* Darker shade to indicate selection */
+}
+.user-info {
+    display: flex;
+    align-items: center;
+    font-size: 24px; /* Increased font size for better visibility */
+}
+.material-icons {
+    font-size: 60px; /* Increased icon size */
+    margin-right: 10px; /* Spacing between icon and username */
+}
+.main-content {
+    display: flex;
+    flex-direction: row;
+    height: 100%; /* Make main content take full height */
+}
+.process-list {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+}
+.process-list h2 {
+    margin-top: 0;
+}
+.process-list select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+.process-list button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.process-list button:hover {
+    background-color: #0056b3;
+}
+.process-list button.running {
+    background-color: #28a745; /* Green color to indicate running state */
+}
+.iframe-container {
+    flex: 4;
+    padding: 20px;
+    background-color: #fff;
+}
+.iframe-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+.form-fields {
+    display: none;
+    padding: 10px 0;
+}
+.form-fields label {
+    display: block;
+    margin-bottom: 5px;
+}
+.form-fields input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+/* Add this CSS to your existing stylesheet */
+#submitButton {
+    background-color: #4CAF50; /* Green background */
+    border: none; /* Remove border */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding */
+    text-align: center; /* Center text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Make it inline-block */
+    font-size: 16px; /* Font size */
+    margin: 4px 2px; /* Margin */
+    cursor: pointer; /* Cursor pointer */
+    border-radius: 8px; /* Rounded corners */
+}
+
+#submitButton:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+.credentials-button {
+    background-color: #808080; /* Gris color */
+    color: white; /* Text color */
+    /* Add any additional styling as needed */
+}

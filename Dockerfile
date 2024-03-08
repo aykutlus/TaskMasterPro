@@ -7,6 +7,9 @@ COPY requirements.txt .
 # Copy the templates folder into the container
 COPY templates/ templates/
 
+# Copy the templates folder into the container
+COPY static/ static/
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app.py .
