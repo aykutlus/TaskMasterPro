@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask with Selenium Standalone Firefox</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        #automationButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #download {
+            position: fixed;
+            bottom: 60px; /* Adjust as needed */
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <iframe src="http://localhost:7902"></iframe>
+    <button id="automationButton">Run Automated Process</button>
+    <button id="download">Download File</button>
+
+    <form id="downloadForm" action="/download-file" method="POST" style="display: none;">
+        <input type="hidden" name="dummy" value="dummy">
+    </form>
+    
+
+    <script>
+        document.getElementById('automationButton').addEventListener('click', function() {
+            // Send an AJAX request to trigger automation
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/automate_firefox', true);
+            xhr.send();
+        });
+        document.getElementById('download').addEventListener('click', function() {
+            // Submit the form to trigger the download
+            document.getElementById('downloadForm').submit();
+        });
+        
+        
+    </script>
+</body>
+</html>
