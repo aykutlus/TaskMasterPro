@@ -25,8 +25,8 @@
         <div class="process-list">
             <h2>Default Processes</h2>
             <select id="processSelect" onchange="showButtons()">
-                <option value="devolution">Extraido</option>
-                <option value="rendimientos">Terminado</option>
+                <option value="extraido">Extraido</option>
+                <option value="termianado">Termianado</option>
                 <!-- Add more default processes here -->
             </select>
             <button class="credentials-button" onclick="toggleCredentials()" style="background-color: #808080; color: white;">Credentials</button>
@@ -41,12 +41,15 @@
                     <button type="submit" id="submitCredentialsButton" style="background-color: #808080; color: white;">Submit</button>
                 </form>
             </div>
-            <button class="export-excel-button" onclick="toggleFormFields('export')">Export</button>
-            <button class="run-button" onclick="toggleFormFields('run')">Run</button>
+            <button class="export-excel-button" onclick="run('export')">Export</button>
+            <button class="run-button" onclick="run('run')">Run</button>
         </div>
         <div class="iframe-container">
             <iframe id="selenium_iframe" src="http://localhost:7902/?autoconnect=1&resize=scale&password=secret"></iframe>
         </div>
+        <form id="downloadForm" action="/download-file" method="POST" style="display: none;">
+            <input type="hidden" name="dummy" value="dummy">
+        </form>
     </div>
     
     

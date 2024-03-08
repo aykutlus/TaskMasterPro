@@ -10,6 +10,8 @@ COPY templates/ templates/
 # Copy the templates folder into the container
 COPY static/ static/
 
+COPY methods/ methods/
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app.py .

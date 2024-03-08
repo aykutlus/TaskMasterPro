@@ -4,7 +4,9 @@ import time
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-
+import os
+from methods.extraido import run_extraido
+from methods.termianado import run_termianado
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -12,36 +14,42 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @app.route('/download-file', methods=['POST'])
 def download_file():
     try:
-        # Path to the file downloaded by Selenium within the Docker volume
-        file_path = '/shared/file_example_XLS_10.xls'
+        # Path to the directory containing the files
+        directory_path = '/shared/'
 
-        # Serve the file for download
+        # Get a list of files in the directory
+        files = os.listdir(directory_path)
+
+        # Find the last modified file
+        last_file = max(files, key=lambda f: os.path.getmtime(os.path.join(directory_path, f)))
+
+        # Serve the last modified file for download
+        file_path = os.path.join(directory_path, last_file)
         return send_file(file_path, as_attachment=True)
-    except Exception as e:
-        raise Exception(e)
-# Endpoint to trigger automation tasks
-@app.route('/automate_firefox')
-def automate_firefox():
-    try:
-        # Initialize Selenium WebDriver with Firefox options
-        options = FirefoxOptions()
-        options.headless = False # Set to False if you want to see the browser UI
-        driver = webdriver.Remote(command_executor='http://172.17.0.2:4444', options=options)
-        
-        # Example automation task: Navigate to a URL and extract its title
-        driver.get('https://www.cmu.edu/ira/CDS/pdf/cds_2022_23/general-information.pdf')
-        driver.maximize_window()
-        # time.sleep(2)
-        # # Your automation code here
-        # # For example:
-        # driver.find_element(By.ID,'L2AGLb').click()
-        # time.sleep(2)
 
-        # driver.find_element(By.NAME,'q').send_keys('Este es un ejemplo de automatizacion sin aplicación.', Keys.RETURN)
-        time.sleep(200)
-        driver.quit()
     except Exception as e:
-        raise Exception(e)
+        return str(e)
+
+@app.route('/run-process')
+def run_process(username, password, export, frequency, process):
+    try:
+        if(process == "extraido"):
+            # Initialize Selenium WebDriver with Firefox options
+            # options = FirefoxOptions()
+            # options.headless = False # Set to False if you want to see the browser UI
+            # driver = webdriver.Remote(command_executor='http://172.17.0.2:4444', options=options)
+            
+            run_extraido(username,password, export, frequency)
+            
+        if(process == "termianado"):
+            run_termianado(username,password, export, frequency)
+            
+    except Exception as e:
+            raise Exception(e)
+    
+    
+    
+    
 # Route to render the index.html template
 @app.route('/')
 def index():
