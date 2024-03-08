@@ -31,18 +31,28 @@ def download_file():
         return str(e)
 
 @app.route('/run-process')
-def run_process(username, password, export, frequency, process):
+def run_process():
     try:
+        # Get JSON data
+        data = request.get_json()
+
+        # Extract data
+        process = data.get('processType')
+        operation = data.get('operation')
+        username = data.get('username')
+        password = data.get('password')
+        frequency = data.get('frequency'
+                             )
         if(process == "extraido"):
             # Initialize Selenium WebDriver with Firefox options
             # options = FirefoxOptions()
             # options.headless = False # Set to False if you want to see the browser UI
             # driver = webdriver.Remote(command_executor='http://172.17.0.2:4444', options=options)
             
-            run_extraido(username,password, export, frequency)
+            run_extraido(username,password, operation, frequency)
             
         if(process == "termianado"):
-            run_termianado(username,password, export, frequency)
+            run_termianado(username,password, operation, frequency)
             
     except Exception as e:
             raise Exception(e)

@@ -77,7 +77,7 @@ function run(operation) {
 }
 
 
-function callAPI(processType, operation) {
+function callAPI(username,password,operation,frequency, processType) {
     console.log(processType, operation);
     
     // Construct the URL for your API endpoint
@@ -86,7 +86,10 @@ function callAPI(processType, operation) {
     // Prepare the request body
     const requestBody = {
         processType: processType,
-        operation: operation
+        operation: operation,
+        username: username,
+        password: password,
+        frequency: frequency,
     };
 
     // Check if the operation is 'export'
