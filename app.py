@@ -91,6 +91,10 @@ def login():
 def dashboard():
     return render_template('projects.html')
 
+@app.route('/agents')
+def agents():
+    return redirect("http://localhost:4446/ui")  
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0',port=5000)
