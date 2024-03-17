@@ -8,9 +8,23 @@ function showButtons() {
     if (selectedProcess === "extraido") {
         exportExcelButton.style.display = "block"; // Show export button for devolution
         runButton.style.display = "block"; // Show run button for devolution
+
     } else if (selectedProcess === "termianado") {
         exportExcelButton.style.display = "none"; // Hide export button for rendimientos
         runButton.style.display = "block"; // Show run button for rendimientos
+
+    } else if (selectedProcess === "rendimientos") {
+        exportExcelButton.style.display = "block"; // Show export button for devolution
+        runButton.style.display = "block"; // Show run button for devolution
+
+    } else if (selectedProcess === "controlPreparacion") {
+        exportExcelButton.style.display = "none"; // Hide export button for rendimientos
+        runButton.style.display = "block"; // Show run button for rendimientos
+
+    } else if (selectedProcess === "devolucionTienda") {
+        exportExcelButton.style.display = "block"; // Hide export button for rendimientos
+        runButton.style.display = "none"; // Show run button for rendimientos
+
     } else {
         exportExcelButton.style.display = "none"; // Hide export button for other processes
         runButton.style.display = "none"; // Hide run button for other processes
@@ -31,16 +45,30 @@ function populateProcesses() {
 
     // Populate options based on selected system
     if (selectedSystem === "sislog") {
-        var options = ["Extraido", "Termianado"];
+        var options = ["extraido", "termianado", "rendimientos", "controlPreparacion"];
     } else if (selectedSystem === "sage") {
-        var options = ["Option 1", "Option 2", "Option 3"]; // Add options for Sage system
+        var options = ["devolucionTienda",]; // Add options for Sage system
     }
 
     // Add options to processSelect
     options.forEach(function(option) {
         var optionElement = document.createElement("option");
-        optionElement.value = option.toLowerCase();
-        optionElement.textContent = option;
+        optionElement.value = option;
+        if(option === "extraido"){
+            optionElement.textContent = "Extraido";
+        }
+        if(option === "termianado"){
+            optionElement.textContent = "Termianado";
+        }
+        if(option === "rendimientos"){
+            optionElement.textContent = "Rendimientos";
+        }
+        if(option === "controlPreparacion"){
+            optionElement.textContent = "Control de Preparacion";
+        }
+        if(option === "devolucionTienda"){
+            optionElement.textContent = "Devolucion de Tienda";
+        }
         processSelect.appendChild(optionElement);
     });
 

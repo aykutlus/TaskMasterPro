@@ -1,27 +1,19 @@
+
+# import webdriver
 from selenium import webdriver
 import time
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from colorama import init, Fore
-from datetime import datetime, timedelta
 import datetime
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.common.keys import Keys
+from colorama import init, Fore
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from selenium.common.exceptions import NoSuchWindowException,SessionNotCreatedException,InvalidSessionIdException
 
-def run_termianado(username, password, export, frequency):
-    
-    try: 
+
+def run_rendimientos(usuario, clave,frequency):
+    try:
+        # # create webdriver object
         options = FirefoxOptions()
         options.headless = False # Set to False if you want to see the browser UI
-        driver = webdriver.Remote(command_executor='http://172.17.0.2:4444', options=options)
-        
-        driver.get("https://chat.openai.com/")
-        time.sleep(100)
-        driver.get("https://chat.openai.com/")
-        
+        driver = webdriver.Remote(command_executor='http://172.17.0.2:4444', options=options)        
         # # get google.co.in
         driver.get("http://192.168.100.183:18001/sislog/autenticacion/login.do")
 
@@ -34,8 +26,8 @@ def run_termianado(username, password, export, frequency):
         username = driver.find_element(By.ID, "usuario")
         password = driver.find_element(By.ID, "clave")
 
-        username.send_keys(username)
-        password.send_keys(password)
+        username.send_keys(usuario)
+        password.send_keys(clave)
 
         accept_button = driver.find_element(By.XPATH, value="//input[@value='Aceptar']")
         accept_button.click()
@@ -52,58 +44,62 @@ def run_termianado(username, password, export, frequency):
 
         driver.find_element(By.CLASS_NAME, "button.aceptar").click()
         time.sleep(2)
-
+            
         driver.switch_to.default_content()
-        time.sleep(2)
+        time.sleep(1)
 
-        # 4. SELECT SALIDAS
-        control = driver.find_element(By.ID, "a_2110-12")
+        # 4. SELECT CONTROL
+        control = driver.find_element(By.ID, "a_2127-12")
         control.click()
         time.sleep(2)
 
-        # 5. SELECT CONSULTA DE PEDIDOS
-        informes = driver.find_element(By.ID, "a_1056-12")
+        # 5. SELECT INFORMES
+        informes = driver.find_element(By.ID, "a_2133-12")
         informes.click()
         time.sleep(2)
 
-        # 6. SELECT DROPDOWN
-        dropdown = driver.find_element(By.ID, "c_sitped")
-        select = Select(dropdown)
-        select.select_by_value("TE")
-        time.sleep(2)
+        # 6. SELECT RENDIMIENTOS
+        rendimientos = driver.find_element(By.ID, "a_2136-12")
+        rendimientos.click()
+        time.sleep(1)
 
+        # 7. SELECT RENDIMIENTOS OPERARIOS
+        rendimientos_operatios = driver.find_element(By.ID, "a_2137-12")
+        rendimientos_operatios.click()
+        time.sleep(1)
+
+        # 8. SELECT RENDIMIENTOS OPERARIOS 2
+        rendimientos_operatios_2 = driver.find_element(By.ID, "a_839-12")
+        rendimientos_operatios_2.click()
+        time.sleep(1)
 
         ## 9. SELECT DESDE
-        desde = driver.find_element(By.ID, "d_fecha_desde")
-        desde.send_keys(Keys.CONTROL + "a")  # Select all text in the input field
-        desde.send_keys(Keys.BACKSPACE)  # Delete the selected text
+        desde = driver.find_element(By.ID, "d_fechor_desde")
         desde_hour = datetime.datetime.now()
-        yesterday = desde_hour - timedelta(days=1)
-        desde_day_string = yesterday.strftime('%d/%m/%Y')
-        print(desde_day_string)
-        desde.send_keys(desde_day_string)
+        desde_day_string = desde_hour.strftime('%d/%m/%Y')
+        combine_desde = f"{desde_day_string} 05:00:00"
+        print(combine_desde)
+        desde.send_keys(combine_desde)
 
 
         ## 9. SELECT HASTA
-        hasta = driver.find_element(By.ID, "d_fecha_hasta")
-        hasta.send_keys(Keys.CONTROL + "a")  # Select all text in the input field
-        hasta.send_keys(Keys.BACKSPACE)  # Delete the selected text
-        hasta_time = datetime.datetime.now()
-        hasta_day_string = hasta_time.strftime('%d/%m/%Y')
-        print(hasta_day_string)
-        hasta.send_keys(hasta_day_string)
+        hasta = driver.find_element(By.ID, "d_fechor_hasta")
+        hasta_hour = datetime.datetime.now()
+        combine_hasta = f"{desde_day_string} 23:15:00"
+        print(combine_hasta)
+        hasta.send_keys(combine_hasta)
 
         ## 9. SELECT BUSCAR
         time.sleep(2)
         accept_button = driver.find_element(By.XPATH, value="//input[@value='Buscar']")
         accept_button.click()
-        print(Fore.LIGHTBLACK_EX,"----")
+        print(Fore.YELLOW,"Ultima actualizacion: " + datetime.datetime.now().strftime('%m-%d-%Y %H:%M:%S'))
         time.sleep(frequency*60)
 
         while True:
             try:
                 ## 10. SELECT ARROW
-                arrow = driver.find_element(By.ID, "img_display_cabFilter")
+                arrow = driver.find_element(By.ID, "img_display_Filter")
                 arrow.click()
                 time.sleep(3)
 
@@ -114,7 +110,8 @@ def run_termianado(username, password, export, frequency):
                 time.sleep(frequency*60)
 
             except Exception as e:
-                if isinstance(e, NoSuchWindowException) or isinstance(e, SessionNotCreatedException) or isinstance(e, InvalidSessionIdException):
+                error_message = str(e)
+                if "Failed to decode response from marionette" in error_message:
                     driver.quit()
                 else:
                     print(Fore.LIGHTBLACK_EX, e)
@@ -124,10 +121,11 @@ def run_termianado(username, password, export, frequency):
                     time.sleep(1)
                     print(Fore.RED,f"Importante!!!") 
                     time.sleep(1)
-                    print(Fore.RED,f"Asegurase de estar en la pagina correcta y MAS IMPORTANTE el boton 'FILTRO DE BUSQUEDA' colapsado!")
+                    print(Fore.RED,f"Asegurase de estar en la pagina correcta, las fechas puestas y MAS IMPORTANTE el boton 'FILTRO DE BUSQUEDA' colapsado!")
                     time.sleep(10)
-                    continue
+                continue
     except Exception as e:
         error_message = str(e)
         if "Failed to decode response from marionette" in error_message:
             driver.quit()
+            

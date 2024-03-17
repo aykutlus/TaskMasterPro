@@ -1,8 +1,6 @@
 from selenium import webdriver
 import time
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from colorama import init, Fore
 from datetime import datetime, timedelta
 import datetime
@@ -11,7 +9,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 
-def run_extraido(username, password, export, frequency):
+def run_extraido(username, password, frequency):
     try:
         options = FirefoxOptions()
         options.headless = False # Set to False if you want to see the browser UI
@@ -98,42 +96,6 @@ def run_extraido(username, password, export, frequency):
         accept_button = driver.find_element(By.XPATH, value="//input[@value='Buscar']")
         accept_button.click()
 
-        if(export == 'export'):
-            
-            ## 10. ORDENADOR POR AGENCIA
-            agencia = None
-
-            while agencia is None:
-                try:
-                    agencia = driver.find_element(By.XPATH,"//a[contains(text(), 'Agencia')]")
-                    time.sleep(2)
-                except Exception:
-                    pass  # Continue waiting until the element is found
-
-            agencia.click()
-            time.sleep(2)
-                
-            ## 10. DOWNLOAD EXCEL
-            buton_excel = None
-
-            while buton_excel is None:
-                try:
-                    buton_excel = driver.find_element(By.CSS_SELECTOR, value='span.export.excel')
-                    time.sleep(2)
-                except Exception:
-                    pass  # Continue waiting until the element is found
-
-            buton_excel.click()
-
-            time.sleep(1)
-            print(Fore.LIGHTBLACK_EX,"----")
-            time.sleep(1)
-            print(Fore.YELLOW,f"Descargando...")
-            time.sleep(1)
-            print(Fore.LIGHTBLACK_EX,"----")
-            time.sleep(10)
-
-
         while True:
             try:
                 ## 10. SELECT ARROW
@@ -148,16 +110,21 @@ def run_extraido(username, password, export, frequency):
                 time.sleep(frequency*60)
 
             except Exception as e:
-                print(Fore.LIGHTBLACK_EX, e)
-                print(Fore.RED,f"Boton 'flecha' o boton 'buscar' no estan visibles.")
-                time.sleep(1)
-                print(Fore.RED,f"Actualizacion reiniciará en 10 segundos. - {datetime.datetime.now().strftime('%m-%d-%Y %H:%M:%S')}") 
-                time.sleep(1)
-                print(Fore.RED,f"Importante!!!") 
-                time.sleep(1)
-                print(Fore.RED,f"Asegurase de estar en la pagina correcta y MAS IMPORTANTE el boton 'FILTRO DE BUSQUEDA' colapsado!")
-                time.sleep(10)
-                continue
+                error_message = str(e)
+                if "Failed to decode response from marionette" in error_message:
+                    driver.quit()
+                else:
+                    print(Fore.LIGHTBLACK_EX, e)
+                    print(Fore.RED,f"Boton 'flecha' o boton 'buscar' no estan visibles.")
+                    time.sleep(1)
+                    print(Fore.RED,f"Actualizacion reiniciará en 10 segundos. - {datetime.datetime.now().strftime('%m-%d-%Y %H:%M:%S')}") 
+                    time.sleep(1)
+                    print(Fore.RED,f"Importante!!!") 
+                    time.sleep(1)
+                    print(Fore.RED,f"Asegurase de estar en la pagina correcta y MAS IMPORTANTE el boton 'FILTRO DE BUSQUEDA' colapsado!")
+                    time.sleep(10)
+                    continue
+                
     except Exception as e:
         error_message = str(e)
         if "Failed to decode response from marionette" in error_message:

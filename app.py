@@ -5,8 +5,15 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 import os
-from methods.extraido import run_extraido
-from methods.termianado import run_termianado
+from methods.sislog.extraido.extraido import run_extraido
+from methods.sislog.termianado import run_termianado
+from methods.sislog.control_de_preparacion import run_control_de_preparacion
+from methods.sislog.extraido.extraido_descarga_excel import run_extraido_descarga_excel
+from methods.sislog.rendimientos.rendimientos import run_rendimientos
+from methods.sislog.rendimientos.descarga_excel import run_rendimientos_descarga_excel
+
+from methods.sage.descarga_devolucion_tienda import run_devolucion_tienda
+
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -47,16 +54,29 @@ def run_process():
             username = data.get('username')
             password = data.get('password')
             frequency = data.get('frequency')
+            
             if(process == "extraido"):
-                # Initialize Selenium WebDriver with Firefox options
-                # options = FirefoxOptions()
-                # options.headless = False # Set to False if you want to see the browser UI
-                # driver = webdriver.Remote(command_executor='http://172.17.0.2:4444', options=options)
-                print("extraido")
-                run_extraido(username,password, operation, frequency)
-                
+                if(operation == "export"):
+                    run_extraido_descarga_excel(username,password)
+                if(operation == "run"):
+                    run_extraido(username,password, operation, frequency)
+                    
+            if(process == "rendimientos"):
+                if(operation == "export"):
+                    run_rendimientos_descarga_excel(username,password)
+                if(operation == "run"):
+                    run_rendimientos(username,password, operation, frequency)                    
+                    
             if(process == "termianado"):
-                run_termianado(username,password, operation, frequency)            # Process your data here
+                run_termianado(username,password, operation, frequency) 
+                
+            if(process == "devolucionTienda"):
+                run_devolucion_tienda(username,password)      
+                      
+            if(process == "controlPreparacion"):
+                run_control_de_preparacion(username,password,frequency)                      
+                
+                
             return jsonify({"success": True}), 200
         else:
             return jsonify({"error": "Request must be JSON"}), 400     

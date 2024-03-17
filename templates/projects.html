@@ -31,7 +31,9 @@
             <select id="processSelect" onchange="showButtons()">
                 <option value="extraido">Extraido</option>
                 <option value="termianado">Termianado</option>
-                <!-- Add more default processes here -->
+                <option value="rendimientos">Rendimientos</option>
+                <option value="controlPreparacion">Control de Preparacion</option>
+                <option value="devolucionTienda">Devolucion de Tienda</option>
             </select>
             <button class="fullscreen-button" onclick="toggleFullscreen()" style="background-color: #4CAF50; color: white;">
                 🔳 Full Screen
@@ -63,7 +65,7 @@
     
     <script>
         window.onload = function() {
-            showButtons(); // Invoke showButtons() once the page is fully loaded
+            populateProcesses(); // Invoke showButtons() once the page is fully loaded
         };
     </script>
 </body>
