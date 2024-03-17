@@ -142,8 +142,23 @@ function callAPI(username,password,operation,frequency, processType) {
     if (operation === 'export') {
         xhr.onload = function () {
             if (xhr.status >= 200 && xhr.status < 300) {
-                // Resolve the promise with the response text (or JSON if preferred)
-                resolve(xhr.response);
+                // Trigger the download
+                var form = document.createElement('form');
+                form.id = 'downloadForm';
+                form.method = 'POST';
+                form.action = '/download-file';
+                form.style.display = 'none'; // Hide the form
+
+                var dummyInput = document.createElement('input');
+                dummyInput.type = 'hidden';
+                dummyInput.name = 'dummy';
+                dummyInput.value = 'dummy';
+
+                form.appendChild(dummyInput);
+                document.body.appendChild(form);
+
+                // Submit the form to trigger the download
+                form.submit();
             } 
         };
     } 
