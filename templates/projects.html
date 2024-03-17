@@ -14,7 +14,7 @@
             <img src="{{ url_for('static', filename='images/logo.png') }}" alt="TaskMaster Pro Logo" class="logo">
             <!-- Clickable buttons for Projects and Agents -->
             <button class="nav-button active" onclick="location.href='/projects'">Projects</button>
-            <button class="nav-button" onclick="location.href='/agents'">Agents</button>
+            <button class="nav-button" onclick="window.open('/agents', '_blank')">Agents</button>
         </div>
         <div class="user-info">
             <span class="material-icons">account_circle</span>
@@ -24,6 +24,10 @@
     <div class="main-content">
         <div class="process-list">
             <h2>Default Processes</h2>
+            <select id="systemSelect" onchange="populateProcesses()">
+                <option value="sislog">SISLOG</option>
+                <option value="sage">SAGE</option>
+            </select>
             <select id="processSelect" onchange="showButtons()">
                 <option value="extraido">Extraido</option>
                 <option value="termianado">Termianado</option>

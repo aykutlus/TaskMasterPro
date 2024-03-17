@@ -93,7 +93,7 @@ def dashboard():
 
 @app.route('/agents')
 def agents():
-    return redirect("http://localhost:4446/ui")  
+    return redirect("http://localhost:4446/ui")
 
 
 if __name__ == '__main__':

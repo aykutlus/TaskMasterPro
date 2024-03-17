@@ -20,6 +20,33 @@ function showButtons() {
     document.getElementById("credentialsFormFields").style.display = "none";
 }
 
+function populateProcesses() {
+    var systemSelect = document.getElementById("systemSelect");
+    var processSelect = document.getElementById("processSelect");
+
+    var selectedSystem = systemSelect.value;
+
+    // Clear previous options
+    processSelect.innerHTML = "";
+
+    // Populate options based on selected system
+    if (selectedSystem === "sislog") {
+        var options = ["Extraido", "Termianado"];
+    } else if (selectedSystem === "sage") {
+        var options = ["Option 1", "Option 2", "Option 3"]; // Add options for Sage system
+    }
+
+    // Add options to processSelect
+    options.forEach(function(option) {
+        var optionElement = document.createElement("option");
+        optionElement.value = option.toLowerCase();
+        optionElement.textContent = option;
+        processSelect.appendChild(optionElement);
+    });
+
+    // Show buttons and form fields
+    showButtons();
+}
 
 function toggleCredentials() {
     var credentialsFormFields = document.getElementById("credentialsFormFields");
