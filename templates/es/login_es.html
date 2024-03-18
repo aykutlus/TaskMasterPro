@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="{% if lang == 'es' %}es{% else %}en{% endif %}">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if lang == 'es' %}Iniciar sesión en TaskMaster Pro{% else %}Login to TaskMaster Pro{% endif %}</title>
+    <title>Iniciar sesión en TaskMaster Pro</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -60,7 +60,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{% if lang == 'es' %}Logo de TaskMaster Pro{% else %}TaskMaster Pro Logo{% endif %}" class="logo">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="TaskMaster Pro Logo" class="logo">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
@@ -69,9 +69,9 @@
         {% endif %}
         {% endwith %}
         <form action="{{ url_for('login') }}" method="post">
-            <input type="text" id="username" name="username" placeholder="{% if lang == 'es' %}Nombre de usuario{% else %}Username{% endif %}" required>
-            <input type="password" id="password" name="password" placeholder="{% if lang == 'es' %}Contraseña{% else %}Password{% endif %}" required>
-            <button type="submit">{% if lang == 'es' %}Iniciar sesión{% else %}Login{% endif %}</button>
+            <input type="text" id="username" name="username" placeholder="Usuario" required>
+            <input type="password" id="password" name="password" placeholder="Contraseña" required>
+            <button type="submit">Iniciar sesión</button>
         </form>
     </div>
     <!-- Optional JavaScript to close the messages -->

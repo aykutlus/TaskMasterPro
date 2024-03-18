@@ -91,25 +91,31 @@ def run_process():
 # Route to render the index.html template
 @app.route('/')
 def index():
-    return render_template('index.html')
+    lang = request.args.get('lang', 'en')  # Default language is English
+    return render_template('index.html', lang=lang)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    lang = request.args.get('lang', 'es')  # Default language is English
+    print("first")
+    print(lang)
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         
         # Replace with your actual verification process
         if username == 'admin' and password == 'admin':
-            return redirect(url_for('dashboard'))  # Redirect to another page
+            print(lang)
+            return redirect(url_for('dashboard',lang=lang))  # Redirect to another page
         else:
             flash('Login was unsuccessful. Please check username and password', 'error')
-            return redirect(url_for('login'))
-    return render_template('login.html')
+            return redirect(url_for('login',lang=lang))
+    return render_template('login.html',lang=lang)
 
 @app.route('/projects')
 def dashboard():
-    return render_template('projects.html')
+    lang = request.args.get('lang', 'en')  # Default language is English
+    return render_template('projects.html',lang=lang)
 
 @app.route('/agents')
 def agents():

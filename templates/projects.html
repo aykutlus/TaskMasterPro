@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{% if lang == 'es' %}es{% else %}en{% endif %}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>{% if lang == 'es' %}Tablero{% else %}Dashboard{% endif %}</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}"> 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
@@ -11,10 +11,10 @@
 <body>
     <div class="header">
         <div class="logo-container">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="TaskMaster Pro Logo" class="logo">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{% if lang == 'es' %}Logo de TaskMaster Pro{% else %}TaskMaster Pro Logo{% endif %}" class="logo" onclick="location.href='{% if lang == 'es' %}/?lang=es{% else %}/?lang=en{% endif %}'">
             <!-- Clickable buttons for Projects and Agents -->
-            <button class="nav-button active" onclick="location.href='/projects'">Projects</button>
-            <button class="nav-button" onclick="window.open('/agents', '_blank')">Agents</button>
+            <button class="nav-button active" onclick="location.href='/projects{% if lang == 'es' %}?lang=es{% endif %}'">{% if lang == 'es' %}Proyectos{% else %}Projects{% endif %}</button>
+            <button class="nav-button" onclick="window.open('/agents', '_blank')">{% if lang == 'es' %}Agentes{% else %}Agents{% endif %}</button>
         </div>
         <div class="user-info">
             <span class="material-icons">account_circle</span>
@@ -23,35 +23,43 @@
     </div>
     <div class="main-content">
         <div class="process-list">
-            <h2>Default Processes</h2>
+            <h2>{% if lang == 'es' %}Procesos predeterminados{% else %}Default Processes{% endif %}</h2>
             <select id="systemSelect" onchange="populateProcesses()">
                 <option value="sislog">SISLOG</option>
                 <option value="sage">SAGE</option>
             </select>
             <select id="processSelect" onchange="showButtons()">
-                <option value="extraido">Extraido</option>
-                <option value="termianado">Termianado</option>
-                <option value="rendimientos">Rendimientos</option>
-                <option value="controlPreparacion">Control de Preparacion</option>
-                <option value="devolucionTienda">Devolucion de Tienda</option>
+                <option value="extraido">{% if lang == 'es' %}Extraido{% else %}Extracted{% endif %}</option>
+                <option value="termianado">{% if lang == 'es' %}Termianado{% else %}Finished{% endif %}</option>
+                <option value="rendimientos">{% if lang == 'es' %}Rendimientos{% else %}Yields{% endif %}</option>
+                <option value="controlPreparacion">{% if lang == 'es' %}Control de Preparacion{% else %}Preparation Control{% endif %}</option>
+                <option value="devolucionTienda">{% if lang == 'es' %}Devolucion de Tienda{% else %}Store Return{% endif %}</option>
             </select>
-            <button class="fullscreen-button" onclick="toggleFullscreen()" style="background-color: #4CAF50; color: white;">
-                🔳 Full Screen
-              </button>                          
-            <button class="credentials-button" onclick="toggleCredentials()" style="background-color: #808080; color: white;">Credentials</button>
+            <button class="fullscreen-button" onclick="toggleFullscreen()" style="background-color: #4CAF50; color: white;"> 🔳
+                {% if lang == 'es' %}Pantalla completa{% else %}Full Screen{% endif %}
+            </button>                          
+            <button class="credentials-button" onclick="toggleCredentials()" style="background-color: #808080; color: white;">
+                {% if lang == 'es' %}Credenciales{% else %}Credentials{% endif %}
+            </button>
             <div class="form-fields" id="credentialsFormFields" style="display: none;">
                 <form id="credentialsForm" onsubmit="submitCredentials(event)">
-                    <label for="username">Username:</label>
+                    <label for="username">{% if lang == 'es' %}Nombre de usuario{% else %}Username{% endif %}:</label>
                     <input type="text" id="username" name="username" required><br><br>
-                    <label for="password">Password:</label>
+                    <label for="password">{% if lang == 'es' %}Contraseña{% else %}Password{% endif %}:</label>
                     <input type="password" id="password" name="password" required><br><br>
-                    <label for="frequency">Frequency:</label>
+                    <label for="frequency">{% if lang == 'es' %}Frecuencia{% else %}Frequency{% endif %}:</label>
                     <input type="number" id="frequency" name="frequency" min="1" required><br><br>
-                    <button type="submit" id="submitCredentialsButton" style="background-color: #808080; color: white;">Submit</button>
+                    <button type="submit" id="submitCredentialsButton" style="background-color: #808080; color: white;">
+                        {% if lang == 'es' %}Enviar{% else %}Submit{% endif %}
+                    </button>
                 </form>
             </div>
-            <button class="export-excel-button" onclick="run('export')">Export</button>
-            <button class="run-button" onclick="run('run')">Run</button>
+            <button class="export-excel-button" onclick="run('export')">
+                {% if lang == 'es' %}Exportar{% else %}Export{% endif %}
+            </button>
+            <button class="run-button" onclick="run('run')">
+                {% if lang == 'es' %}Ejecutar{% else %}Run{% endif %}
+            </button>
         </div>
         <div class="iframe-container">
             <iframe id="selenium_iframe" src="http://localhost:7902/?autoconnect=1&resize=scale&password=secret"></iframe>
@@ -60,8 +68,6 @@
             <input type="hidden" name="dummy" value="dummy">
         </form>
     </div>
-    
-    
     
     <script>
         window.onload = function() {

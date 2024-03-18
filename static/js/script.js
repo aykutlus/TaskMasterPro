@@ -190,3 +190,9 @@ function toggleFullscreen() {
         }
     }
 }
+
+
+function changeLanguage(language) {
+    // Redirect to the same page with the selected language parameter
+    window.location.href = `/?lang=${language}`;
+}

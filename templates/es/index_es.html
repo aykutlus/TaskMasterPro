@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if lang == 'es' %}Bienvenido a TaskMaster Pro{% else %}Welcome to TaskMaster Pro{% endif %}</title>
+    <title>Bienvenido a TaskMaster Pro</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -46,34 +46,14 @@
         button:hover {
             background-color: #0056b3;
         }
-        .language-buttons {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-        .language-buttons button {
-            margin-left: 5px;
-        }
     </style>
 </head>
 <body>
-    <!-- Language selection buttons -->
-    <div class="language-buttons">
-        <button onclick="changeLanguage('en')">English</button>
-        <button onclick="changeLanguage('es')">Español</button>
-    </div>
-
     <div class="container">
         <img src="{{ url_for('static', filename='images/logo.png') }}" alt="TaskMaster Pro Logo" class="logo">
-        <h1>{% if lang == 'es' %}Bienvenido a TaskMaster Pro{% else %}Welcome to TaskMaster Pro{% endif %}</h1>
-        <p>{% if lang == 'es' %}Automatiza tus tareas diarias de manera eficiente.{% else %}Automate your daily tasks efficiently.{% endif %}</p>        
-        <button onclick="window.location.href='/login?lang={% if lang == 'es' %}es{% else %}en{% endif %}';">{% if lang == 'es' %}Comenzar{% else %}Login{% endif %}</button>
+        <h1>Bienvenido a TaskMaster Pro</h1>
+        <p>Automatiza tus tareas diarias de manera eficiente.</p>
+        <button onclick="window.location.href='/login';">Comenzar</button>
     </div>
-
-    <script>
-        function changeLanguage(lang) {
-            window.location.href = '/?lang=' + lang;
-        }
-    </script>
 </body>
 </html>

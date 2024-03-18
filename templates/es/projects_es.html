@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de control</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}"> 
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="TaskMaster Pro Logo" class="logo">
+            <!-- Clickable buttons for Projects and Agents -->
+            <button class="nav-button active" onclick="location.href='/projects'">Proyectos</button>
+            <button class="nav-button" onclick="window.open('/agents', '_blank')">Agentes</button>
+        </div>
+        <div class="user-info">
+            <span class="material-icons">account_circle</span>
+            <span>admin</span>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="process-list">
+            <h2>Procesos Predeterminados</h2>
+            <select id="systemSelect" onchange="populateProcesses()">
+                <option value="sislog">SISLOG</option>
+                <option value="sage">SAGE</option>
+            </select>
+            <select id="processSelect" onchange="showButtons()">
+                <option value="extraido">Extraido</option>
+                <option value="termianado">Termianado</option>
+                <option value="rendimientos">Rendimientos</option>
+                <option value="controlPreparacion">Control de Preparacion</option>
+                <option value="devolucionTienda">Devolucion de Tienda</option>
+            </select>
+            <button class="fullscreen-button" onclick="toggleFullscreen()" style="background-color: #4CAF50; color: white;">
+                🔳 Pantalla Completa
+              </button>                          
+            <button class="credentials-button" onclick="toggleCredentials()" style="background-color: #808080; color: white;">Credenciales</button>
+            <div class="form-fields" id="credentialsFormFields" style="display: none;">
+                <form id="credentialsForm" onsubmit="submitCredentials(event)">
+                    <label for="username">Usuario:</label>
+                    <input type="text" id="username" name="username" required><br><br>
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" required><br><br>
+                    <label for="frequency">Frecuencia:</label>
+                    <input type="number" id="frequency" name="frequency" min="1" required><br><br>
+                    <button type="submit" id="submitCredentialsButton" style="background-color: #808080; color: white;">Enviar</button>
+                </form>
+            </div>
+            <button class="export-excel-button" onclick="run('export')">Exportar</button>
+            <button class="run-button" onclick="run('run')">Ejecutar</button>
+        </div>
+        <div class="iframe-container">
+            <iframe id="selenium_iframe" src="http://localhost:7902/?autoconnect=1&resize=scale&password=secret"></iframe>
+        </div>
+        <form id="downloadForm" action="/download-file" method="POST" style="display: none;">
+            <input type="hidden" name="dummy" value="dummy">
+        </form>
+    </div>
+    
+    
+    
+    <script>
+        window.onload = function() {
+            populateProcesses(); // Invoke showButtons() once the page is fully loaded
+        };
+    </script>
+</body>
+</html>
