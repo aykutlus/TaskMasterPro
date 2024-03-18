@@ -96,7 +96,7 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    lang = request.args.get('lang', 'es')  # Default language is English
+    lang = request.args.get('lang', 'en')  # Default language is English
     print("first")
     print(lang)
     if request.method == 'POST':

@@ -68,7 +68,7 @@
             {% endfor %}
         {% endif %}
         {% endwith %}
-        <form action="{{ url_for('login') }}" method="post">
+        <form action="{% if lang == 'es' %}{{ url_for('login') }}?lang=es{% else %}{{ url_for('login') }}?lang=en{% endif %}" method="post">
             <input type="text" id="username" name="username" placeholder="{% if lang == 'es' %}Nombre de usuario{% else %}Username{% endif %}" required>
             <input type="password" id="password" name="password" placeholder="{% if lang == 'es' %}Contraseña{% else %}Password{% endif %}" required>
             <button type="submit">{% if lang == 'es' %}Iniciar sesión{% else %}Login{% endif %}</button>
