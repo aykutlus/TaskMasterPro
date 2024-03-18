@@ -97,15 +97,12 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     lang = request.args.get('lang', 'en')  # Default language is English
-    print("first")
-    print(lang)
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         
         # Replace with your actual verification process
         if username == 'admin' and password == 'admin':
-            print(lang)
             return redirect(url_for('dashboard',lang=lang))  # Redirect to another page
         else:
             if lang == 'es':
