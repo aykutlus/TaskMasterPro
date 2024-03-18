@@ -10,8 +10,9 @@
 </head>
 <body>
     <div class="header">
-        <div class="logo-container">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{% if lang == 'es' %}Logo de TaskMaster Pro{% else %}TaskMaster Pro Logo{% endif %}" class="logo" onclick="location.href='{% if lang == 'es' %}/?lang=es{% else %}/?lang=en{% endif %}'">
+        <div class="logo-container" style="text-align: center;">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{% if lang == 'es' %}Logo de TaskMaster Pro{% else %}TaskMaster Pro Logo{% endif %}" class="logo" onclick="location.href='{% if lang == 'es' %}/?lang=es{% else %}/?lang=en{% endif %}'" style="display: block; margin: auto;">
+            <div>TaskMaster</div>
             <!-- Clickable buttons for Projects and Agents -->
             <button class="nav-button active" onclick="location.href='/projects{% if lang == 'es' %}?lang=es{% endif %}'">{% if lang == 'es' %}Proyectos{% else %}Projects{% endif %}</button>
             <button class="nav-button" onclick="window.open('/agents', '_blank')">{% if lang == 'es' %}Agentes{% else %}Agents{% endif %}</button>

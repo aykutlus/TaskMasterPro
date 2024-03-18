@@ -132,3 +132,17 @@ html, body {
     color: white; /* Text color */
     /* Add any additional styling as needed */
 }
+
+.logo-container {
+    text-align: center;
+}
+
+.logo {
+    display: block;
+    margin: auto;
+}
+
+.company-name {
+    font-size: small;
+    margin-top: 5px; /* Adjust as needed for spacing */
+}

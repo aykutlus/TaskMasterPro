@@ -61,6 +61,7 @@
 <body>
     <div class="container">
         <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{% if lang == 'es' %}Logo de TaskMaster Pro{% else %}TaskMaster Pro Logo{% endif %}" class="logo">
+        <h2>{% if lang == 'es' %}TaskMaster Pro{% else %}TaskMaster Pro{% endif %}</h2>
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}

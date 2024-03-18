@@ -108,7 +108,10 @@ def login():
             print(lang)
             return redirect(url_for('dashboard',lang=lang))  # Redirect to another page
         else:
-            flash('Login was unsuccessful. Please check username and password', 'error')
+            if lang == 'es':
+                flash('El inicio de sesión no fue exitoso. Por favor, verifique el nombre de usuario y la contraseña', 'error')
+            else:
+                flash('Login was unsuccessful. Please check username and password', 'error')
             return redirect(url_for('login',lang=lang))
     return render_template('login.html',lang=lang)
 

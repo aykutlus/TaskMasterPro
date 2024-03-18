@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if lang == 'es' %}Bienvenido a TaskMaster Pro{% else %}Welcome to TaskMaster Pro{% endif %}</title>
+    <title>{% if lang == 'es' %}Bienvenid@ a TaskMaster Pro{% else %}Welcome to TaskMaster Pro{% endif %}</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -65,7 +65,7 @@
 
     <div class="container">
         <img src="{{ url_for('static', filename='images/logo.png') }}" alt="TaskMaster Pro Logo" class="logo">
-        <h1>{% if lang == 'es' %}Bienvenido a TaskMaster Pro{% else %}Welcome to TaskMaster Pro{% endif %}</h1>
+        <h1>{% if lang == 'es' %}Bienvenid@ a TaskMaster Pro{% else %}Welcome to TaskMaster Pro{% endif %}</h1>
         <p>{% if lang == 'es' %}Automatiza tus tareas diarias de manera eficiente.{% else %}Automate your daily tasks efficiently.{% endif %}</p>        
         <button onclick="window.location.href='/login?lang={% if lang == 'es' %}es{% else %}en{% endif %}';">{% if lang == 'es' %}Comenzar{% else %}Login{% endif %}</button>
     </div>
