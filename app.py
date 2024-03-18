@@ -59,16 +59,16 @@ def run_process():
                 if(operation == "export"):
                     run_extraido_descarga_excel(username,password)
                 if(operation == "run"):
-                    run_extraido(username,password, operation, frequency)
+                    run_extraido(username,password,frequency)
                     
             if(process == "rendimientos"):
                 if(operation == "export"):
                     run_rendimientos_descarga_excel(username,password)
                 if(operation == "run"):
-                    run_rendimientos(username,password, operation, frequency)                    
+                    run_rendimientos(username,password,frequency)                    
                     
             if(process == "termianado"):
-                run_termianado(username,password, operation, frequency) 
+                run_termianado(username,password,frequency) 
                 
             if(process == "devolucionTienda"):
                 run_devolucion_tienda(username,password)      

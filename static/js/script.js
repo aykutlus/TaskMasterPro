@@ -140,27 +140,27 @@ function callAPI(username,password,operation,frequency, processType) {
 
     // Check if the operation is 'export'
     if (operation === 'export') {
-        xhr.onload = function () {
-            if (xhr.status >= 200 && xhr.status < 300) {
-                // Trigger the download
-                var form = document.createElement('form');
-                form.id = 'downloadForm';
-                form.method = 'POST';
-                form.action = '/download-file';
-                form.style.display = 'none'; // Hide the form
+        // xhr.onload = function () {
+        //     if (xhr.status >= 200 && xhr.status < 300) {
+        //         // Trigger the download
+        //         var form = document.createElement('form');
+        //         form.id = 'downloadForm';
+        //         form.method = 'POST';
+        //         form.action = '/download-file';
+        //         form.style.display = 'none'; // Hide the form
 
-                var dummyInput = document.createElement('input');
-                dummyInput.type = 'hidden';
-                dummyInput.name = 'dummy';
-                dummyInput.value = 'dummy';
+        //         var dummyInput = document.createElement('input');
+        //         dummyInput.type = 'hidden';
+        //         dummyInput.name = 'dummy';
+        //         dummyInput.value = 'dummy';
 
-                form.appendChild(dummyInput);
-                document.body.appendChild(form);
+        //         form.appendChild(dummyInput);
+        //         document.body.appendChild(form);
 
-                // Submit the form to trigger the download
-                form.submit();
-            } 
-        };
+        //         // Submit the form to trigger the download
+        //         form.submit();
+        //     } 
+        // };
     } 
 }
 

@@ -9,7 +9,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 
-def run_extraido(username, password, frequency):
+def run_extraido(usuario, clave, frequency):
     try:
         options = FirefoxOptions()
         options.headless = False # Set to False if you want to see the browser UI
@@ -32,8 +32,8 @@ def run_extraido(username, password, frequency):
         username = driver.find_element(By.ID, "usuario")
         password = driver.find_element(By.ID, "clave")
 
-        username.send_keys(username)
-        password.send_keys(password)
+        username.send_keys(usuario)
+        password.send_keys(clave)
 
         accept_button = driver.find_element(By.XPATH, value="//input[@value='Aceptar']")
         accept_button.click()
@@ -126,6 +126,7 @@ def run_extraido(username, password, frequency):
                     continue
                 
     except Exception as e:
+        print(e)
         error_message = str(e)
         if "Failed to decode response from marionette" in error_message:
             driver.quit()
