@@ -14,13 +14,7 @@ def run_extraido(usuario, clave, frequency):
         options = FirefoxOptions()
         options.headless = False # Set to False if you want to see the browser UI
         driver = webdriver.Remote(command_executor='http://172.17.0.2:4444', options=options)
-        # Position and resize the first browser window
-        # Open a new tab
-        driver.get("https://www.google.com")
-        time.sleep(100)
-        driver.get("https://www.google.com")
         
-        # # get google.co.in
         driver.get("http://192.168.100.183:18001/sislog/autenticacion/login.do")
 
         # # Maximize the window and let code stall 

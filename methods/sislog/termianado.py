@@ -15,10 +15,6 @@ def run_termianado(usuario, clave, frequency):
         options.headless = False # Set to False if you want to see the browser UI
         driver = webdriver.Remote(command_executor='http://172.17.0.2:4444', options=options)
         
-        driver.get("https://chat.openai.com/")
-        time.sleep(100)
-        driver.get("https://chat.openai.com/")
-        
         # # get google.co.in
         driver.get("http://192.168.100.183:18001/sislog/autenticacion/login.do")
 
